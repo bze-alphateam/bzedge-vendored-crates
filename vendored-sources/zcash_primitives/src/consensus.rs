@@ -22,11 +22,12 @@ pub struct MainNetwork;
 impl Parameters for MainNetwork {
     fn activation_height(nu: NetworkUpgrade) -> Option<u32> {
         match nu {
-            NetworkUpgrade::Overwinter => Some(347_500),
-            NetworkUpgrade::Sapling => Some(419_200),
-            NetworkUpgrade::Blossom => Some(653_600),
-            NetworkUpgrade::Heartwood => Some(903_000),
-            NetworkUpgrade::Canopy => Some(1_046_400),
+            NetworkUpgrade::Overwinter => Some(484_000),
+            NetworkUpgrade::Sapling => Some(484_000),
+            NetworkUpgrade::Bzshares => Some(883_000),
+            NetworkUpgrade::Blossom => None,
+            NetworkUpgrade::Heartwood => None,
+            NetworkUpgrade::Canopy => None,
         }
     }
 }
@@ -40,9 +41,10 @@ impl Parameters for TestNetwork {
         match nu {
             NetworkUpgrade::Overwinter => Some(207_500),
             NetworkUpgrade::Sapling => Some(280_000),
-            NetworkUpgrade::Blossom => Some(584_000),
-            NetworkUpgrade::Heartwood => Some(903_800),
-            NetworkUpgrade::Canopy => Some(1_028_500),
+            NetworkUpgrade::Bzshares => None,
+            NetworkUpgrade::Blossom => None,
+            NetworkUpgrade::Heartwood => None,
+            NetworkUpgrade::Canopy => None,
         }
     }
 }
@@ -61,6 +63,8 @@ pub enum NetworkUpgrade {
     ///
     /// [Sapling]: https://z.cash/upgrade/sapling/
     Sapling,
+    /// The [Bzshares] network upgrade.
+    Bzshares,
     /// The [Blossom] network upgrade.
     ///
     /// [Blossom]: https://z.cash/upgrade/blossom/
@@ -80,6 +84,7 @@ impl fmt::Display for NetworkUpgrade {
         match self {
             NetworkUpgrade::Overwinter => write!(f, "Overwinter"),
             NetworkUpgrade::Sapling => write!(f, "Sapling"),
+            NetworkUpgrade::Bzshares => write!(f, "Bzshares"),
             NetworkUpgrade::Blossom => write!(f, "Blossom"),
             NetworkUpgrade::Heartwood => write!(f, "Heartwood"),
             NetworkUpgrade::Canopy => write!(f, "Canopy"),
@@ -92,6 +97,7 @@ impl NetworkUpgrade {
         match self {
             NetworkUpgrade::Overwinter => BranchId::Overwinter,
             NetworkUpgrade::Sapling => BranchId::Sapling,
+            NetworkUpgrade::Bzshares => BranchId::Bzshares,
             NetworkUpgrade::Blossom => BranchId::Blossom,
             NetworkUpgrade::Heartwood => BranchId::Heartwood,
             NetworkUpgrade::Canopy => BranchId::Canopy,
@@ -106,6 +112,7 @@ impl NetworkUpgrade {
 const UPGRADES_IN_ORDER: &[NetworkUpgrade] = &[
     NetworkUpgrade::Overwinter,
     NetworkUpgrade::Sapling,
+    NetworkUpgrade::Bzshares,
     NetworkUpgrade::Blossom,
     NetworkUpgrade::Heartwood,
     NetworkUpgrade::Canopy,
@@ -134,6 +141,8 @@ pub enum BranchId {
     Overwinter,
     /// The consensus rules deployed by [`NetworkUpgrade::Sapling`].
     Sapling,
+    /// The consensus rules deployed by [`NetworkUpgrade::Bzshares`].
+    Bzshares,
     /// The consensus rules deployed by [`NetworkUpgrade::Blossom`].
     Blossom,
     /// The consensus rules deployed by [`NetworkUpgrade::Heartwood`].
@@ -148,11 +157,12 @@ impl TryFrom<u32> for BranchId {
     fn try_from(value: u32) -> Result<Self, Self::Error> {
         match value {
             0 => Ok(BranchId::Sprout),
-            0x5ba8_1b19 => Ok(BranchId::Overwinter),
-            0x76b8_09bb => Ok(BranchId::Sapling),
-            0x2bb4_0e60 => Ok(BranchId::Blossom),
-            0xf5b9_230b => Ok(BranchId::Heartwood),
-            0xe9ff_75a6 => Ok(BranchId::Canopy),
+            0x6f77_627a => Ok(BranchId::Overwinter),
+            0x736c_627a => Ok(BranchId::Sapling),
+            // 0x736c_627a => Ok(BranchId::Bzshares),
+            0x427a_6253 => Ok(BranchId::Blossom),
+            0x6862_7a77 => Ok(BranchId::Heartwood),
+            0x634e_4279 => Ok(BranchId::Canopy),
             _ => Err("Unknown consensus branch ID"),
         }
     }
@@ -162,11 +172,11 @@ impl From<BranchId> for u32 {
     fn from(consensus_branch_id: BranchId) -> u32 {
         match consensus_branch_id {
             BranchId::Sprout => 0,
-            BranchId::Overwinter => 0x5ba8_1b19,
-            BranchId::Sapling => 0x76b8_09bb,
-            BranchId::Blossom => 0x2bb4_0e60,
-            BranchId::Heartwood => 0xf5b9_230b,
-            BranchId::Canopy => 0xe9ff_75a6,
+            BranchId::Overwinter => 0x6f77_627a,
+            BranchId::Sapling => 0x736c_627a,
+            BranchId::Blossom => 0x427a_6253,
+            BranchId::Heartwood => 0x6862_7a77,
+            BranchId::Canopy => 0x634e_4279,
         }
     }
 }
