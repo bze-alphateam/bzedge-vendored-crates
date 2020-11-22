@@ -174,6 +174,7 @@ impl From<BranchId> for u32 {
             BranchId::Sprout => 0,
             BranchId::Overwinter => 0x6f77_627a,
             BranchId::Sapling => 0x736c_627a,
+            BranchId::Bzshares => 0x736c_627a,
             BranchId::Blossom => 0x427a_6253,
             BranchId::Heartwood => 0x6862_7a77,
             BranchId::Canopy => 0x634e_4279,
