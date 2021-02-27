@@ -13,7 +13,7 @@
 [package]
 edition = "2018"
 name = "loom"
-version = "0.3.6"
+version = "0.4.0"
 authors = ["Carl Lerche <me@carllerche.com>"]
 description = "Permutation testing for concurrent code"
 homepage = "https://github.com/tokio-rs/loom"
@@ -24,7 +24,7 @@ categories = ["concurrency", "data-structures"]
 license = "MIT"
 repository = "https://github.com/tokio-rs/loom"
 [dependencies.cfg-if]
-version = "0.1.6"
+version = "1.0.0"
 
 [dependencies.futures-util]
 version = "0.3.0"

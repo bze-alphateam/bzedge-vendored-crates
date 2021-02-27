@@ -22,7 +22,7 @@
 //!
 //! ## Minimum Supported Rust Version
 //!
-//! Requires Rust **1.39** or newer.
+//! Requires Rust **1.44** or newer.
 //!
 //! In the future, we reserve the right to change MSRV (i.e. MSRV is out-of-scope
 //! for this crate's SemVer guarantees), however when we do it will be accompanied
@@ -208,7 +208,7 @@
 
 #![no_std]
 #![cfg_attr(docsrs, feature(doc_cfg))]
-#![doc(html_root_url = "https://docs.rs/zeroize/1.1.1")]
+#![doc(html_root_url = "https://docs.rs/zeroize/1.2.0")]
 #![warn(missing_docs, rust_2018_idioms, trivial_casts, unused_qualifications)]
 
 #[cfg(feature = "alloc")]
@@ -218,6 +218,9 @@ extern crate alloc;
 #[cfg(feature = "zeroize_derive")]
 #[cfg_attr(docsrs, doc(cfg(feature = "zeroize_derive")))]
 pub use zeroize_derive::Zeroize;
+
+#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+mod x86;
 
 use core::{ops, ptr, slice::IterMut, sync::atomic};
 
@@ -374,30 +377,7 @@ where
 #[cfg_attr(docsrs, doc(cfg(feature = "alloc")))]
 impl Zeroize for String {
     fn zeroize(&mut self) {
-        unsafe { self.as_bytes_mut() }.zeroize();
-        debug_assert!(self.as_bytes().iter().all(|b| *b == 0));
-
-        // Zero the capacity of the `String` that is not initialized.
-        {
-            // Safety:
-            //
-            // This is safe, because `String` never allocates more than `isize::MAX` bytes.
-            let extra_capacity_start = unsafe { self.as_mut_ptr().add(self.len()) };
-            let extra_capacity_len = self.capacity().saturating_sub(self.len());
-
-            // Safety:
-            // The memory pointed to by `extra_capacity_start` is valid for `extra_capacity_len`
-            // bytes, because the allocation of the `String` has enough reported capacity.
-            // It is also properly aligned, because the `T` here is `u8`, which has an alignment of
-            // `1`.
-            // `extra_capacity_len` is not larger than an `isize`, because `String` never allocates
-            // more than `isize::MAX` bytes.
-            // The `String` allocation also guarantees to never wrap around the address space.
-            unsafe { volatile_set(extra_capacity_start, 0, extra_capacity_len) };
-            atomic_fence();
-        }
-
-        self.clear();
+        unsafe { self.as_mut_vec() }.zeroize();
     }
 }
 

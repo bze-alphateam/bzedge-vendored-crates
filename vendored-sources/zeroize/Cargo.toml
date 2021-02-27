@@ -13,7 +13,7 @@
 [package]
 edition = "2018"
 name = "zeroize"
-version = "1.1.1"
+version = "1.2.0"
 authors = ["Tony Arcieri <tony@iqlusion.io>"]
 description = "Securely clear secrets from memory with a simple trait built on\nstable Rust primitives which guarantee memory is zeroed using an\noperation will not be 'optimized away' by the compiler.\nUses a portable pure Rust implementation that works everywhere,\neven WASM!\n"
 homepage = "https://github.com/iqlusioninc/crates/"
@@ -24,7 +24,7 @@ license = "Apache-2.0 OR MIT"
 repository = "https://github.com/iqlusioninc/crates/tree/develop/zeroize"
 [package.metadata.docs.rs]
 all-features = true
-rustdoc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "-Ctarget_cpu=sandybridge"]
 [dependencies.zeroize_derive]
 version = "1"
 optional = true
@@ -32,5 +32,3 @@ optional = true
 [features]
 alloc = []
 default = ["alloc"]
-[badges.maintenance]
-status = "passively-maintained"

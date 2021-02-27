@@ -13,7 +13,7 @@
 [package]
 edition = "2018"
 name = "rust-argon2"
-version = "0.8.2"
+version = "0.8.3"
 authors = ["Martijn Rijkeboer <mrr@sru-systems.com>"]
 description = "Rust implementation of the Argon2 password hashing function."
 homepage = "https://github.com/sru-systems/rust-argon2"
@@ -26,7 +26,7 @@ repository = "https://github.com/sru-systems/rust-argon2"
 [lib]
 name = "argon2"
 [dependencies.base64]
-version = "0.12"
+version = "0.13"
 
 [dependencies.blake2b_simd]
 version = "0.5"
@@ -35,10 +35,15 @@ version = "0.5"
 version = "0.1.4"
 
 [dependencies.crossbeam-utils]
-version = "0.7"
+version = "0.8"
+optional = true
+
+[dependencies.serde]
+version = "1.0.116"
+features = ["derive"]
 optional = true
 [dev-dependencies.hex]
-version = "0.3"
+version = "0.4"
 
 [features]
 default = ["crossbeam-utils"]
