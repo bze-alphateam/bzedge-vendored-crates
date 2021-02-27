@@ -12,7 +12,7 @@
 
 [package]
 name = "curve25519-dalek"
-version = "3.0.0"
+version = "3.0.2"
 authors = ["Isis Lovecruft <isis@patternsinthevoid.net>", "Henry de Valence <hdevalence@hdevalence.ca>"]
 exclude = ["**/.gitignore", ".gitignore", ".travis.yml"]
 description = "A pure-Rust implementation of group operations on ristretto255 and Curve25519"
@@ -39,9 +39,10 @@ version = "0.9"
 default-features = false
 
 [dependencies.packed_simd]
-version = "0.3"
+version = "0.3.4"
 features = ["into_bits"]
 optional = true
+package = "packed_simd_2"
 
 [dependencies.rand_core]
 version = "0.5"
