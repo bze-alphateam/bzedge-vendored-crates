@@ -190,9 +190,9 @@ pub const MAIN_NETWORK: MainNetwork = MainNetwork;
 impl Parameters for MainNetwork {
     fn activation_height(&self, nu: NetworkUpgrade) -> Option<BlockHeight> {
         match nu {
-            NetworkUpgrade::Overwinter => Some(484_000),
-            NetworkUpgrade::Sapling => Some(484_000),
-            NetworkUpgrade::Bzshares => Some(883_000),
+            NetworkUpgrade::Overwinter => Some(BlockHeight(484_000)),
+            NetworkUpgrade::Sapling => Some(BlockHeight(484_000)),
+            NetworkUpgrade::Bzshares => Some(BlockHeight(883_000)),
             NetworkUpgrade::Blossom => None,
             NetworkUpgrade::Heartwood => None,
             NetworkUpgrade::Canopy => None,
@@ -235,8 +235,8 @@ pub const TEST_NETWORK: TestNetwork = TestNetwork;
 impl Parameters for TestNetwork {
     fn activation_height(&self, nu: NetworkUpgrade) -> Option<BlockHeight> {
         match nu {
-            NetworkUpgrade::Overwinter => Some(207_500),
-            NetworkUpgrade::Sapling => Some(280_000),
+            NetworkUpgrade::Overwinter => Some(BlockHeight(207_500)),
+            NetworkUpgrade::Sapling => Some(BlockHeight(280_000)),
             NetworkUpgrade::Bzshares => None,
             NetworkUpgrade::Blossom => None,
             NetworkUpgrade::Heartwood => None,
